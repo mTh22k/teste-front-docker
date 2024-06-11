@@ -1,6 +1,10 @@
 # Use uma imagem base do Ubuntu 20.04
 FROM ubuntu:20.04
 
+# Definir o fuso horário sem interação do usuário
+ENV TZ=America/Sao_Paulo
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 # Atualizar e instalar dependências necessárias
 RUN apt-get update && apt-get install -y \
     g++ \
@@ -11,10 +15,10 @@ RUN apt-get update && apt-get install -y \
     nano \
     vim \
     mariadb-server \
-    mariadb-client
+    mariadb-client \
+    expect
 
 # Instalar o Node Version Manager (NVM)
-# Instalação do nvm
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash \
     && export NVM_DIR="$HOME/.nvm" \
     && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" \
@@ -22,19 +26,20 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | b
     && nvm install 16 \
     && nvm use 16
 
-# Instalar Composer
-#RUN apt-get install -y composer
+# Instalar Composer, PHP e extensões necessárias
+RUN apt-get update && apt-get install -y \
+    composer \
+    php-fpm \
+    php7.4-mysql \
+    php7.4-curl \
+    php-xml
 
-# Instalar PHP e extensões necessárias
-#RUN apt-get install -y \
-#    php-fpm \
-#    php7.4-mysql \
-#    php7.4-curl \
-#    php-xml
+# Copiar o script de inicialização
+COPY mysql_secure_installation_expect.sh /usr/local/bin/mysql_secure_installation_expect.sh
+RUN chmod +x /usr/local/bin/mysql_secure_installation_expect.sh
 
-# Iniciar o serviço MySQL
-#RUN /etc/init.d/mysql start \
-#    && mysql_secure_installation
+# Executar o script de inicialização
+RUN /usr/local/bin/mysql_secure_installation_expect.sh
 
 # Definir o diretório de trabalho padrão
 WORKDIR /var/www/html
