@@ -16,7 +16,14 @@ RUN apt-get update && apt-get install -y \
     vim \
     mariadb-server \
     mariadb-client \
-    expect
+    expect \
+    nodejs \
+    npm \
+    php \
+    php-fpm \
+    php7.4-mysql \
+    php7.4-curl \
+    php-xml
 
 # Instalar o Node Version Manager (NVM)
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash \
@@ -26,23 +33,14 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | b
     && nvm install 16 \
     && nvm use 16
 
-# Instalar Composer, PHP e extensões necessárias
-RUN apt-get update && apt-get install -y \
-    composer \
-    php-fpm \
-    php7.4-mysql \
-    php7.4-curl \
-    php-xml
+# Instalar Composer
+RUN apt-get install -y composer
 
 # Copiar o script de inicialização
-COPY mysql_secure_installation_expect.sh /usr/local/bin/mysql_secure_installation_expect.sh
-RUN chmod +x /usr/local/bin/mysql_secure_installation_expect.sh
-
-# Executar o script de inicialização
-RUN /usr/local/bin/mysql_secure_installation_expect.sh
+COPY start_services.sh /var/www/html/start_services.sh
+RUN chmod +x /var/www/html/start_services.sh
 
 # Definir o diretório de trabalho padrão
 WORKDIR /var/www/html
 
-# Comando padrão para iniciar o shell bash
-CMD ["bash"]
+
