@@ -184,11 +184,49 @@
 <br/>
 <br/>
   
-## 7. 💻 Observações
+## 7. 💻 Integração com o VSCode
 
-### 7.1 🛠 E o vscode que é a mais complicada vou ver dps tambem, mas ja tenho uma ideia, tudo tem q ser melhorado ainda, é so um rascunho.
+Caso você ainda não tenha o Visual Studio Code em sua máquina, é possível obtê-lo a partir da sua [página de download](https://code.visualstudio.com/download). Se já o tiver, basta acompanhar o restante dos passos!
+
+### 7.1 🛠 Instalar as extensões "Docker" e "Dev Containers"
+
+#### 7.1.1 🔗 Vá para a aba de extensões (ou pressione `Ctrl+Shift+X`)
+
+#### 7.1.2 🔗 Procure por [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) e instale a extensão
+
+#### 7.1.3 🔗 Faça o mesmo com a extensão [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+
+### 7.2 🛠 Iniciar o container
+
+#### 7.2.1 🔗 No menu lateral do VSCode, clique no ícone do Docker
+
+#### 7.2.2 🔗 Na aba "Containers", você verá o container criado anteriormente
+
+#### 7.2.3 🔗 Caso ele esteja "desligado", clique com o botão direito do mouse sobre ele e escolha a opção **"Start"**:
+
+![Iniciando o container pelo VSCode](https://i.imgur.com/OcGnkWA.png)
+
+### 7.3 🛠 Abrir o projeto dentro do container
+
+#### 7.3.1 🔗 No menu lateral do Docker, clique em "Remote Explorer"
+
+#### 7.3.2 🔗 Em "Dev Container", você encontrará o nosso container
+
+#### 7.3.3 🔗 Passe o mouse sobre o container e clique no botão "Attach in New Window":
+
+![Abrindo o container do projeto em uma nova janela](https://i.imgur.com/uxRrOsT.png)
+
+#### 7.3.4 🔗 Possivelmente, nenhum projeto estará aberto, então clique no ícone de "Explorer" e no botão "New Folder"
+
+#### 7.3.5 🔗 Na barra de pesquisa, digite o caminho da pasta do projeto. Exemplo:
+
+```
+/var/www/html/nostrosole
+```
+    
+#### 7.3.6 🔗 Clique em "Ok" para abri-lo
 
 <br/>
 <br/>
 
-###### by, Matheus Marquesini 💚 #quaqua
+###### by Marquesini e Andrieli 💚 #quaqua
